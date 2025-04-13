@@ -41,7 +41,6 @@ def main():
         ('12359', 'Sadio Mane', '984220')
     ]
 
-
     conn.executemany("INSERT INTO Pilots (pilot_id, name, license_number) VALUES (?, ?, ?)", pilots)
     conn.commit()
     print("Records created successfully")
