@@ -10,15 +10,13 @@ def flight_retrieval(conn):
     status = input("Enter Flight Status (or press return to skip): ").strip().title()
     departure_date = input("Enter Departure Date (YYYY-MM-DD) (or press return to skip): ").strip()
 
-# Query that will gather information from all of the tables
+# Query that will gather information from Flights and Destinations
     query = """
-    SELECT Flights.flight_number, Flights.departure_time, Flights.arrival_time,
-           Flights.status, Pilots.name, Destinations.city, Destinations.airport_code
+    SELECT Flights.departure_time, Flights.status, Destinations.airport_code
     FROM Flights
-    JOIN Pilots ON Flights.pilot_id = Pilots.pilot_id
     JOIN Destinations ON Flights.destination_id = Destinations.destination_id
-    WHERE 1=1
     """
+
 # This holds the values to put into the query
     params = []
 
@@ -45,4 +43,3 @@ def flight_retrieval(conn):
             print(row)
     else:
         print("No matching flights found.")
-

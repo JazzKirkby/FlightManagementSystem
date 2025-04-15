@@ -1,20 +1,21 @@
-#importing sqlite3
+# Importing sqlite3
 import sqlite3
 
+# Importing my functions for database manipulation
 from flight_retrieval import flight_retrieval
 
-#defining function called main
+# Defining function called main
 def main():
-    #creating the database
+    #Creating the database
     conn = sqlite3.connect('Flight_Management_DB')
     print ("Database has been created")
 
-    #deleting the tables if they exist
+    # Deleting the tables if they exist
     conn.execute("DROP TABLE IF EXISTS Pilots")
     conn.execute("DROP TABLE IF EXISTS Destinations")
     conn.execute("DROP TABLE IF EXISTS Flights")
 
-    #creating tables Pilots, Destinations and Flights
+    # Creating tables Pilots, Destinations and Flights
     conn.execute("CREATE TABLE Pilots (pilot_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, license_number TEXT UNIQUE NOT NULL)")
     print ("Table Pilots created successfully")
 
@@ -24,7 +25,7 @@ def main():
     conn.execute("CREATE TABLE Flights (flight_id INTEGER PRIMARY KEY AUTOINCREMENT, flight_number TEXT UNIQUE NOT NULL, departure_time TEXT NOT NULL, arrival_time TEXT NOT NULL, status TEXT NOT NULL, pilot_id INTEGER, destination_id INTEGER, FOREIGN KEY (pilot_id) REFERENCES Pilots (pilot_id), FOREIGN KEY (destination_id) REFERENCES Destinations (destination_id))")
     print ("Table Flights created successfully")
 
-    #Adding data into Pilots, Destinations and Flights
+    # Adding data into Pilots, Destinations and Flights
     pilots = [
         ('12345', 'Harry Kane', '654321'),
         ('12346', 'David Beckham', '345678'),
@@ -88,17 +89,44 @@ def main():
         ('015', '00015', '2025-04-12 14:45', '2025-04-12 23:30', 'Delayed', '12359', '54401')
     ]
 
-
     conn.executemany("INSERT INTO Flights (flight_id, flight_number, departure_time, arrival_time, status, pilot_id, destination_id) VALUES (?, ?, ?, ?, ?, ?, ?)", Flights)
     conn.commit()
     print("Records created successfully")
     print("Total number of rows created:", conn.total_changes)
 
+    while True:
+        print("\nWhat would you like to do?")
+        print("1. Flight Retrieval")
+        print("2. Schedule Modification")
+        print("3. Pilot Assignment")
+        print("4. Destination Management")
+        print("5. Flights to Destination Summary")
+        print("6. See flights assigned to Pilot")
+        print("7. Exit")
 
-    flight_retrieval(conn)
+        choice = input("Enter your choice (1-7): ")
 
+        if choice == '1':
+            flight_retrieval(conn)
+        elif choice == '2':
+            update_flight()
+        elif choice == '3':
+            pilot_assignment()
+        elif choice == '4':
+            manage_destination()
+        elif choice == '5':
+            flight_destination_summary()
+        elif choice == '6':
+            flights_assigned_pilot()
+        elif choice == '7':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+    # Close the database connection
     conn.close()
-
-#Ensures main only runs if executed directly
+    
+# Ensures main only runs if executed directly
 if __name__ == "__main__":
     main()
