@@ -1,8 +1,8 @@
-# flight_destination_summary.py
+# view_update_destination.py
 
-# Here I will define the function called flight_destination_summary
+# Here I will define the function called view_update_destination
 # and create a cursor object to run the SQL queries
-def flight_destination_summary(conn):
+def view_update_destination(conn):
     cursor = conn.cursor()
 
 # User input section

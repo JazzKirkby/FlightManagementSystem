@@ -1,8 +1,8 @@
-# manage_destination.py
+# update_flight_information.py
 
-# Here I will define the function called manage_destination
+# Here I will define the function called update_flight_information
 # and create a cursor object to run the SQL queries
-def manage_destination(conn):
+def update_flight_information(conn):
     cursor = conn.cursor()
 
 # User input section

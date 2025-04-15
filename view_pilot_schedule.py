@@ -1,8 +1,8 @@
-# flights_assigned_pilot.py
+# view_pilot_schedule.py
 
-# Here I will define the function called flights_assigned_pilot
+# Here I will define the function called view_pilot_schedule
 # and create a cursor object to run the SQL queries
-def flights_assigned_pilot(conn):
+def view_pilot_schedule(conn):
     cursor = conn.cursor()
 
 # User input section

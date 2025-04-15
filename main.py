@@ -2,12 +2,12 @@
 import sqlite3
 
 # Importing my modules for database manipulation
-from view_flights import flight_retrieval
-from assign_pilot import update_flight
-from add_flight import pilot_assignment
-from update_flight_information import manage_destination
-from view_update_destination import flight_destination_summary
-from view_pilot_schedule import flights_assigned_pilot
+from view_flights import view_flights
+from assign_pilot import assign_pilot
+from add_flight import add_flight
+from update_flight_information import update_flight_information
+from view_update_destination import view_update_destination
+from view_pilot_schedule import view_pilot_schedule
 
 # Defining function called main
 def main():

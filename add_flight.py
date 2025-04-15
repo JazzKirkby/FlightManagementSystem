@@ -1,8 +1,8 @@
-# pilot_assignment.py
+# add_flight.py
 
-# Here I will define the function called pilot_assignment
+# Here I will define the function called add_flight
 # and create a cursor object to run the SQL queries
-def pilot_assignment(conn):
+def add_flight(conn):
     cursor = conn.cursor()
 
 # User input section
