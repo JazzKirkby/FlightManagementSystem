@@ -112,17 +112,17 @@ def main():
         choice = input("Enter your choice (1-7): ")
 
         if choice == '1':
-            view_flights(conn)
+            add_flight(conn)
         elif choice == '2':
-            update_flight(conn)
+            view_flights(conn)
         elif choice == '3':
-            pilot_assignment(conn)
+            update_flight_information(conn)
         elif choice == '4':
-            manage_destination(conn)
+            assign_pilot(conn)
         elif choice == '5':
-            flight_destination_summary(conn)
+            view_pilot_schedule(conn)
         elif choice == '6':
-            flights_assigned_pilot(conn)
+            view_update_destination(conn)
         elif choice == '7':
             print("Exiting...")
             break
