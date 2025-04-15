@@ -1,8 +1,8 @@
-# flight_retrieval.py
+# view_flights.py
 
-# Here I will define the function called flight_retrieval 
+# Here I will define the function called view_flights
 # and create a cursor object to run the SQL queries
-def flight_retrieval(conn):
+def view_flights(conn):
     cursor = conn.cursor()
 
 # User input section

@@ -1,13 +1,13 @@
 # Importing sqlite3
 import sqlite3
 
-# Importing my functions for database manipulation
-from flight_retrieval import flight_retrieval
-from update_flight import update_flight
-from pilot_assignment import pilot_assignment
-from manage_destination import manage_destination
-from flight_destination_summary import flight_destination_summary
-from flights_assigned_pilot import flights_assigned_pilot
+# Importing my modules for database manipulation
+from view_flights import flight_retrieval
+from assign_pilot import update_flight
+from add_flight import pilot_assignment
+from update_flight_information import manage_destination
+from view_update_destination import flight_destination_summary
+from view_pilot_schedule import flights_assigned_pilot
 
 # Defining function called main
 def main():
@@ -101,18 +101,18 @@ def main():
 
     while True:
         print("\nWhat would you like to do?")
-        print("1. Flight Retrieval")
-        print("2. Schedule Modification")
-        print("3. Pilot Assignment")
-        print("4. Destination Management")
-        print("5. Flights to Destination Summary")
-        print("6. See flights assigned to Pilot")
+        print("1. Add a New Flight")
+        print("2. View Flights by Criteria")
+        print("3. Update Flight Information")
+        print("4. Assign Pilot to Flight")
+        print("5. View Pilot Schedule")
+        print("6. View/Update Destination Information")
         print("7. Exit")
 
         choice = input("Enter your choice (1-7): ")
 
         if choice == '1':
-            flight_retrieval(conn)
+            view_flights(conn)
         elif choice == '2':
             update_flight(conn)
         elif choice == '3':
