@@ -2,6 +2,9 @@
 University of Bath Coursework for Databases CM50277
 
 # Contents
-main.py - creating the tables, storing the data, user friendly way of amending data via the terminal
+main.py - creating the tables, creating the data, user friendly way of amending data via the terminal
+Flight_Management_DB - database
+README.md - description of contents of directory, description of how to amend the data in the database
 
-README.md - description of contents of directory
+# How to Guide
+
