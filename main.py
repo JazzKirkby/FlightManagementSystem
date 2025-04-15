@@ -3,6 +3,11 @@ import sqlite3
 
 # Importing my functions for database manipulation
 from flight_retrieval import flight_retrieval
+from update_flight import update_flight
+from pilot_assignment import pilot_assignment
+from manage_destination import manage_destination
+from flight_destination_summary import flight_destination_summary
+from flights_assigned_pilot import flights_assigned_pilot
 
 # Defining function called main
 def main():
@@ -109,15 +114,15 @@ def main():
         if choice == '1':
             flight_retrieval(conn)
         elif choice == '2':
-            update_flight()
+            update_flight(conn)
         elif choice == '3':
-            pilot_assignment()
+            pilot_assignment(conn)
         elif choice == '4':
-            manage_destination()
+            manage_destination(conn)
         elif choice == '5':
-            flight_destination_summary()
+            flight_destination_summary(conn)
         elif choice == '6':
-            flights_assigned_pilot()
+            flights_assigned_pilot(conn)
         elif choice == '7':
             print("Exiting...")
             break
