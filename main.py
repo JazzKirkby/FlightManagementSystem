@@ -1,6 +1,8 @@
 #importing sqlite3
 import sqlite3
 
+from flight_retrieval import flight_retrieval
+
 #defining function called main
 def main():
     #creating the database
@@ -91,6 +93,11 @@ def main():
     conn.commit()
     print("Records created successfully")
     print("Total number of rows created:", conn.total_changes)
+
+
+    flight_retrieval(conn)
+
+    conn.close()
 
 #Ensures main only runs if executed directly
 if __name__ == "__main__":
