@@ -100,7 +100,19 @@ def main():
     print("Records created successfully")
     print("Total number of rows created:", conn.total_changes)
 
-    # # The SQL query for flight retrieval (you could change the destination, status, and departure_date)
+    ###########################################################################################################################################
+    # Section for SQL Queries
+    # These are commented out, please uncomment them individually to run.
+    #
+    # 1 - Flight Retrival
+    # 2 - Schedule Modification
+    # 3.a) Assign the pilot to another flight
+    # 3.b) Print the schedule for a specific pilot
+    # 4 - Destination Management
+    # 5 - Flights to Destination Summary
+
+    ###########################################################################################################################################
+    # # 1. The SQL query for flight retrieval (you could change the destination, status, and departure_date)
     # query = """
     # SELECT f.departure_time, f.status, d.airport_code 
     # FROM Flights f
@@ -121,7 +133,8 @@ def main():
     # else:
     #     print('No flights identified')
 
-    # # Define the SQL query for schedule modification
+    ###########################################################################################################################################
+    # # 2. Define the SQL query for schedule modification
     # query = """
     # UPDATE Flights
     # SET departure_time = '2025-04-20 15:30:00', status = 'Delayed'
@@ -148,7 +161,8 @@ def main():
     # else:
     #     print("Flight not found.")
 
-    # # Assign the pilot to another flight
+    ###########################################################################################################################################
+    # # 3.a) Assign the pilot to another flight
     # update_query = """
     # UPDATE Flights
     # SET pilot_id = 12346
@@ -171,7 +185,8 @@ def main():
     # else:
     #     print("Flight not found.")
 
-    # # Print the schedule for a specific pilot
+    ###########################################################################################################################################
+    # # 3.b) Print the schedule for a specific pilot
     # query = """
     # SELECT f.flight_id, f.departure_time, f.status, d.city
     # FROM Flights f
@@ -189,53 +204,80 @@ def main():
     # else:
     #     print("No flights found for this pilot.")
 
+    ###########################################################################################################################################
+    # # 4. View all destinations before the update
+    # query = "SELECT * FROM Destinations"
+    # cursor.execute(query)
+    # destinations = cursor.fetchall()
+    # print("Before update:")
+    # for destination in destinations:
+    #     print(destination)
 
+    # # Update destination information
+    # update_query = """
+    # UPDATE Destinations
+    # SET city = 'San Francisco', country = 'United States', airport_code = 'SFO'
+    # WHERE destination_id = 54401;
+    # """
+    # cursor.execute(update_query)
+    # conn.commit()
 
+    # # View all destinations after the update
+    # cursor.execute(query)  # Run the SELECT query again
+    # destinations = cursor.fetchall()
+    # print("\nAfter update:")
+    # for destination in destinations:
+    #     print(destination)
 
+    ###########################################################################################################################################
+    # # 5. Number of flights to each destination
+    # query = """
+    # SELECT destination_id, COUNT(*) AS num_flights
+    # FROM Flights
+    # GROUP BY destination_id;
+    # """
+    # cursor.execute(query)
 
+    # # Fetch and print the results
+    # destination_summary = cursor.fetchall()
+    # for row in destination_summary:
+    #     print(row)
+    
+    ###########################################################################################################################################
 
+    while True:
+        print("\nWhat would you like to do?")
+        print("1. Add a New Flight")
+        print("2. View Flights by Criteria")
+        print("3. Update Flight Information")
+        print("4. Assign Pilot to Flight")
+        print("5. View Pilot Schedule")
+        print("6. View/Update Destination Information")
+        print("7. Exit")
 
+        choice = input("Enter your choice (1-7): ")
 
+        if choice == '1':
+            add_flight(conn)
+        elif choice == '2':
+            view_flights(conn)
+        elif choice == '3':
+            update_flight_information(conn)
+        elif choice == '4':
+            assign_pilot(conn)
+        elif choice == '5':
+            view_pilot_schedule(conn)
+        elif choice == '6':
+            view_update_destination(conn)
+        elif choice == '7':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Try again.")
 
-
-
-
-
-
-
-    # while True:
-    #     print("\nWhat would you like to do?")
-    #     print("1. Add a New Flight")
-    #     print("2. View Flights by Criteria")
-    #     print("3. Update Flight Information")
-    #     print("4. Assign Pilot to Flight")
-    #     print("5. View Pilot Schedule")
-    #     print("6. View/Update Destination Information")
-    #     print("7. Exit")
-
-    #     choice = input("Enter your choice (1-7): ")
-
-    #     if choice == '1':
-    #         add_flight(conn)
-    #     elif choice == '2':
-    #         view_flights(conn)
-    #     elif choice == '3':
-    #         update_flight_information(conn)
-    #     elif choice == '4':
-    #         assign_pilot(conn)
-    #     elif choice == '5':
-    #         view_pilot_schedule(conn)
-    #     elif choice == '6':
-    #         view_update_destination(conn)
-    #     elif choice == '7':
-    #         print("Exiting...")
-    #         break
-    #     else:
-    #         print("Invalid choice. Try again.")
-
-    # Close the database connection
-    # conn.close()
-    # cursor.close()
+    Close the database connection
+    conn.close()
+    cursor.close()
     
 # Ensures main only runs if executed directly
 if __name__ == "__main__":
