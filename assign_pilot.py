@@ -1,5 +1,7 @@
 # assign_pilot.py
 
+# Here I will define the function called assign_pilot
+# and create a cursor object to run the SQL queries
 def assign_pilot(conn):
     cursor = conn.cursor()
 

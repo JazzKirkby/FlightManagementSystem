@@ -5,41 +5,47 @@
 def view_update_destination(conn):
     cursor = conn.cursor()
 
-# User input section
-    airport_code = input("Enter Airport Code (or press return to skip): ").strip().upper()
-    status = input("Enter Flight Status (or press return to skip): ").strip().title()
-    departure_date = input("Enter Departure Date (YYYY-MM-DD) (or press return to skip): ").strip()
+    # Ask for the destination ID to modify
+    destination_id = input("Enter the Destination ID to view and update: ").strip()
 
-# Query that will gather information from Flights and Destinations
-    query = """
-    SELECT Flights.departure_time, Flights.status, Destinations.airport_code
-    FROM Flights
-    JOIN Destinations ON Flights.destination_id = Destinations.destination_id
+    # Query to get the current destination details
+    check_query = """
+    SELECT destination_id, city, country, airport_code
+    FROM Destinations
+    WHERE destination_id = ?;
     """
+    
+    cursor.execute(check_query, (destination_id,))
+    destination = cursor.fetchone()
 
-# This holds the values to put into the query
-    params = []
+    if destination:
+        print(f"Current details for Destination ID {destination_id}:")
+        print(f"Destination ID: {destination[0]}, City: {destination[1]}, Country: {destination[2]}, Airport Code: {destination[3]}")
 
-# If the user added an airport code, status or departure date, we 
-# can add this to the query and save the value to params
-    if airport_code:
-        query += " AND Destinations.airport_code = ?"
-        params.append(airport_code)
-    if status:
-        query += " AND Flights.status = ?"
-        params.append(status)
-    if departure_date:
-        query += " AND date(Flights.departure_time) = ?"
-        params.append(departure_date)
+        # Ask for new values (or press Enter to keep the old value)
+        city = input(f"Enter new city (current: {destination[1]}): ").strip() or destination[1]
+        country = input(f"Enter new country (current: {destination[2]}): ").strip() or destination[2]
+        airport_code = input(f"Enter new airport code (current: {destination[3]}): ").strip() or destination[3]
 
-# This is where the query with the params is run
-# and then gets all the rows returned by the query and prints them, 
-# or tells you there was nothing found
-    cursor.execute(query, params)
-    results = cursor.fetchall()
+        # Update query to modify the destination details
+        update_query = """
+        UPDATE Destinations
+        SET city = ?, country = ?, airport_code = ?
+        WHERE destination_id = ?;
+        """
 
-    if results:
-        for row in results:
-            print(row)
+        # Execute the query to update the destination
+        cursor.execute(update_query, (city, country, airport_code, destination_id))
+        conn.commit()
+
+        # Check if the update was successful
+        cursor.execute(check_query, (destination_id,))
+        updated_destination = cursor.fetchone()
+
+        if updated_destination:
+            print("Destination updated successfully:")
+            print(f"Destination ID: {updated_destination[0]}, City: {updated_destination[1]}, Country: {updated_destination[2]}, Airport Code: {updated_destination[3]}")
+        else:
+            print("Destination not found.")
     else:
-        print("No matching flights found.")
+        print("Destination not found.")

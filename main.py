@@ -1,7 +1,9 @@
+# main.py
+
 # Importing sqlite3
 import sqlite3
 
-# Importing my modules for database manipulation
+# Importing my functions for database manipulation
 from view_flights import view_flights
 from assign_pilot import assign_pilot
 from add_flight import add_flight
@@ -106,7 +108,7 @@ def main():
     #
     # 1 - Flight Retrival
     # 2 - Schedule Modification
-    # 3.a) Assign the pilot to another flight
+    # 3.a) Assign a pilot to another flight
     # 3.b) Print the schedule for a specific pilot
     # 4 - Destination Management
     # 5 - Flights to Destination Summary
@@ -162,7 +164,7 @@ def main():
     #     print("Flight not found.")
 
     ###########################################################################################################################################
-    # # 3.a) Assign the pilot to another flight
+    # # 3.a) Assign a pilot to another flight
     # update_query = """
     # UPDATE Flights
     # SET pilot_id = 12346
