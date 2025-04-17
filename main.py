@@ -242,9 +242,8 @@ def main():
     # destination_summary = cursor.fetchall()
     # for row in destination_summary:
     #     print(row)
-    
-    ###########################################################################################################################################
 
+    ###########################################################################################################################################
     while True:
         print("\nWhat would you like to do?")
         print("1. Add a New Flight")
@@ -275,7 +274,7 @@ def main():
         else:
             print("Invalid choice. Try again.")
 
-    Close the database connection
+    # Close the database connection
     conn.close()
     cursor.close()
     
