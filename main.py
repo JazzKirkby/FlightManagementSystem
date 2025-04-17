@@ -13,6 +13,7 @@ from view_pilot_schedule import view_pilot_schedule
 def main():
     #Creating the database
     conn = sqlite3.connect('Flight_Management_DB')
+    cursor = conn.cursor()
     print ("Database has been created")
 
     # Deleting the tables if they exist
@@ -99,38 +100,123 @@ def main():
     print("Records created successfully")
     print("Total number of rows created:", conn.total_changes)
 
-    while True:
-        print("\nWhat would you like to do?")
-        print("1. Add a New Flight")
-        print("2. View Flights by Criteria")
-        print("3. Update Flight Information")
-        print("4. Assign Pilot to Flight")
-        print("5. View Pilot Schedule")
-        print("6. View/Update Destination Information")
-        print("7. Exit")
+    # # The SQL query for flight retrieval (you could change the destination, status, and departure_date)
+    # query = """
+    # SELECT f.departure_time, f.status, d.airport_code 
+    # FROM Flights f
+    # JOIN Destinations d ON f.destination_id = d.destination_id
+    # WHERE d.airport_code = 'JFK'
+    #     AND f.status = 'Delayed'
+    #     AND f.departure_time >= '2025-04-12 07:30';
+    # """
 
-        choice = input("Enter your choice (1-7): ")
+    # # Execute the query and fetch the results
+    # cursor.execute(query)
+    # flights = cursor.fetchall()
 
-        if choice == '1':
-            add_flight(conn)
-        elif choice == '2':
-            view_flights(conn)
-        elif choice == '3':
-            update_flight_information(conn)
-        elif choice == '4':
-            assign_pilot(conn)
-        elif choice == '5':
-            view_pilot_schedule(conn)
-        elif choice == '6':
-            view_update_destination(conn)
-        elif choice == '7':
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Try again.")
+    # # Check if any flights were found and print them, or if not print the else
+    # if flights:
+    #     for flight in flights:
+    #         print(flight)
+    # else:
+    #     print('No flights identified')
+
+    # # Define the SQL query for schedule modification
+    # query = """
+    # UPDATE Flights
+    # SET departure_time = '2025-04-20 15:30:00', status = 'Delayed'
+    # WHERE flight_id = 001;
+    # """
+
+    # # Execute the query and commit
+    # cursor.execute(query)
+    # conn.commit()
+
+    # # I wanted to confirm the changes had been made, so printed them
+    # check_query = """
+    # SELECT flight_id, departure_time, status
+    # FROM Flights
+    # WHERE flight_id = 001;
+    # """
+
+    # cursor.execute(check_query)
+    # updated_flight = cursor.fetchone()
+
+    # if updated_flight:
+    #     print("Flight updated successfully:")
+    #     print(updated_flight)
+    # else:
+    #     print("Flight not found.")
+
+    # # Assign the pilot to another flight
+    # update_query = """
+    # UPDATE Flights
+    # SET pilot_id = 12346
+    # WHERE flight_id = 002;
+    # """
+    # cursor.execute(update_query)
+    # conn.commit()
+
+    # # Get and print the updated flight with the new pilot
+    # check_query = """
+    # SELECT flight_id, departure_time, status, pilot_id
+    # FROM Flights
+    # WHERE flight_id = 002;
+    # """
+    # cursor.execute(check_query)
+    # updated_flight = cursor.fetchone()
+
+    # if updated_flight:
+    #     print(f"Updated Flight - Flight_ID: {updated_flight[0]}, Departure Time: {updated_flight[1]}, Status: {updated_flight[2]}, Pilot ID: {updated_flight[3]}")
+    # else:
+    #     print("Flight not found.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # while True:
+    #     print("\nWhat would you like to do?")
+    #     print("1. Add a New Flight")
+    #     print("2. View Flights by Criteria")
+    #     print("3. Update Flight Information")
+    #     print("4. Assign Pilot to Flight")
+    #     print("5. View Pilot Schedule")
+    #     print("6. View/Update Destination Information")
+    #     print("7. Exit")
+
+    #     choice = input("Enter your choice (1-7): ")
+
+    #     if choice == '1':
+    #         add_flight(conn)
+    #     elif choice == '2':
+    #         view_flights(conn)
+    #     elif choice == '3':
+    #         update_flight_information(conn)
+    #     elif choice == '4':
+    #         assign_pilot(conn)
+    #     elif choice == '5':
+    #         view_pilot_schedule(conn)
+    #     elif choice == '6':
+    #         view_update_destination(conn)
+    #     elif choice == '7':
+    #         print("Exiting...")
+    #         break
+    #     else:
+    #         print("Invalid choice. Try again.")
 
     # Close the database connection
-    conn.close()
+    # conn.close()
+    # cursor.close()
     
 # Ensures main only runs if executed directly
 if __name__ == "__main__":
