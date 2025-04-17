@@ -152,7 +152,7 @@ def main():
     # update_query = """
     # UPDATE Flights
     # SET pilot_id = 12346
-    # WHERE flight_id = 002;
+    # WHERE flight_id = 003;
     # """
     # cursor.execute(update_query)
     # conn.commit()
@@ -161,7 +161,7 @@ def main():
     # check_query = """
     # SELECT flight_id, departure_time, status, pilot_id
     # FROM Flights
-    # WHERE flight_id = 002;
+    # WHERE flight_id = 003;
     # """
     # cursor.execute(check_query)
     # updated_flight = cursor.fetchone()
@@ -170,6 +170,25 @@ def main():
     #     print(f"Updated Flight - Flight_ID: {updated_flight[0]}, Departure Time: {updated_flight[1]}, Status: {updated_flight[2]}, Pilot ID: {updated_flight[3]}")
     # else:
     #     print("Flight not found.")
+
+    # # Print the schedule for a specific pilot
+    # query = """
+    # SELECT f.flight_id, f.departure_time, f.status, d.city
+    # FROM Flights f
+    # JOIN Destinations d ON f.destination_id = d.destination_id
+    # WHERE f.pilot_id = 12346;
+    # """
+    # cursor.execute(query)
+
+    # # Fetch and print the results
+    # pilot_schedule = cursor.fetchall()
+
+    # if pilot_schedule:
+    #     for flight in pilot_schedule:
+    #         print(f"{flight[0]}: {flight[1]} - {flight[2]} to {flight[3]}")
+    # else:
+    #     print("No flights found for this pilot.")
+
 
 
 
