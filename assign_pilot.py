@@ -1,45 +1,65 @@
 # assign_pilot.py
 
-# Here I will define the function called assign_pilot
-# and create a cursor object to run the SQL queries
 def assign_pilot(conn):
     cursor = conn.cursor()
 
-# User input section
-    airport_code = input("Enter Airport Code (or press return to skip): ").strip().upper()
-    status = input("Enter Flight Status (or press return to skip): ").strip().title()
-    departure_date = input("Enter Departure Date (YYYY-MM-DD) (or press return to skip): ").strip()
+    # Ask the user for flight_id and pilot_id
+    flight_id = input("Enter the Flight ID to assign a pilot: ").strip()
+    pilot_id = input("Enter the Pilot ID to assign to the flight: ").strip()
 
-# Query that will gather information from Flights and Destinations
-    query = """
-    SELECT Flights.departure_time, Flights.status, Destinations.airport_code
-    FROM Flights
-    JOIN Destinations ON Flights.destination_id = Destinations.destination_id
-    """
+    try:
+        # Check if the pilot_id exists in the Pilots table
+        check_pilot_query = """
+        SELECT pilot_id
+        FROM Pilots
+        WHERE pilot_id = ?;
+        """
+        cursor.execute(check_pilot_query, (pilot_id,))
+        pilot_exists = cursor.fetchone()
 
-# This holds the values to put into the query
-    params = []
+        if not pilot_exists:
+            print(f"Pilot ID {pilot_id} does not exist. Please enter a valid Pilot ID.")
+            return
 
-# If the user added an airport code, status or departure date, we 
-# can add this to the query and save the value to params
-    if airport_code:
-        query += " AND Destinations.airport_code = ?"
-        params.append(airport_code)
-    if status:
-        query += " AND Flights.status = ?"
-        params.append(status)
-    if departure_date:
-        query += " AND date(Flights.departure_time) = ?"
-        params.append(departure_date)
+        # Check and print the flight details before the update
+        check_query_before = """
+        SELECT flight_id, departure_time, status, pilot_id
+        FROM Flights
+        WHERE flight_id = ?;
+        """
+        cursor.execute(check_query_before, (flight_id,))
+        flight_before = cursor.fetchone()
 
-# This is where the query with the params is run
-# and then gets all the rows returned by the query and prints them, 
-# or tells you there was nothing found
-    cursor.execute(query, params)
-    results = cursor.fetchall()
+        if flight_before:
+            print("\nBefore the update:")
+            print(f"Flight_ID: {flight_before[0]}, Departure Time: {flight_before[1]}, Status: {flight_before[2]}, Pilot ID: {flight_before[3]}")
+        else:
+            print("Flight not found. Cannot update.")
+            return
 
-    if results:
-        for row in results:
-            print(row)
-    else:
-        print("No matching flights found.")
+        # Update the pilot for the given flight
+        update_query = """
+        UPDATE Flights
+        SET pilot_id = ?
+        WHERE flight_id = ?;
+        """
+        cursor.execute(update_query, (pilot_id, flight_id))
+        conn.commit()
+
+        # Check if the update was successful and print the updated flight
+        check_query_after = """
+        SELECT flight_id, departure_time, status, pilot_id
+        FROM Flights
+        WHERE flight_id = ?;
+        """
+        cursor.execute(check_query_after, (flight_id,))
+        flight_after = cursor.fetchone()
+
+        if flight_after:
+            print("\nAfter the update:")
+            print(f"Flight_ID: {flight_after[0]}, Departure Time: {flight_after[1]}, Status: {flight_after[2]}, Pilot ID: {flight_after[3]}")
+        else:
+            print("Flight not found after update.")
+
+    except Exception as e:
+        print(f"Error: {e}")
